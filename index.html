@@ -13,6 +13,7 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script>
         $(function () {
+            let dlugosclisty = 0;
             let dokupienia = 0;
             let kupione = 0;
             $("#formularz").submit(function (e) {
@@ -32,12 +33,21 @@
                     $("#dokupienia").text("Do kupienia: " + dokupienia + " kupione: " + kupione)
                     $("#lista").append("<li><span class='produkt'>" + nazwa + " - " + ilosc + " szt. </span> <button id='usun'> Usun </button> </li>")
                     $("#komunikat").text("")
+                    $("#informacja").hide()
                 }
+
             })
             $(document).on("click", "#usun", function () {
                 $(this).parent().remove()
                 --dokupienia;
                 $("#dokupienia").text("Do kupienia: " + dokupienia + " kupione: " + kupione)
+                dlugosclisty = 0;
+                $("li").each(function(){
+                    lugosclisty++;
+                })
+                if(dlugosclisty == 0){
+                    $("#informacja").show()
+                }
             })
             $(document).on("click", ".produkt", function () {
                 $(this).toggleClass("kupiony")
@@ -51,10 +61,25 @@
                     $("#dokupienia").text("Do kupienia: " + dokupienia + " kupione: " + kupione)
                 }
             })
+            $(document).on("click", "#usunkupione", function() {
+                let ilosckupionych = 0
+                $(".kupiony").each(function(){
+                    ilosckupionych++
+                })
+                kupione = kupione - ilosckupionych
+                $(".kupiony").parent().remove()
+                $("#dokupienia").text("Do kupienia: " + dokupienia + " kupione: " + kupione)
+                dlugosclisty = 0;
+                $("li").each(function(){
+                    dlugosclisty++;
+                })
+                if(dlugosclisty == 0){
+                    $("#informacja").show()
+                }
+            })
         })
     </script>
 </head>
-
 <body>
     <form id="formularz">
         <input type="text" id="polenazwa">
@@ -64,8 +89,9 @@
         <p id="dokupienia"></p>
         <p id="komunikat"></p>
     </form>
+    <button id="usunkupione">Usuń kupione</button>
     <ul id="lista">
-
+        <p id="informacja">Lista jest pusta</p>
     </ul>
 </body>
 
