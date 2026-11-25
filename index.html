@@ -25,9 +25,12 @@
                 } else if (ilosc <= 0) {
                     $("#komunikat").text("Podaj ilosc wieksza od zera").css("color", "red")
                 } else {
-                    $("#lista").append("<li> nazwa produktu: " + nazwa +  ", szt: " + ilosc + "</li>")
+                    $("#lista").append("<li>" + nazwa + " - " + ilosc + " szt. <button id='usun'> Usun </button> </li>")
                     $("#komunikat").text("")
                 }
+                $(document).on("click" , "#usun", function(){
+                    $(this).parent().remove()
+                })
             })
         })
     </script>
@@ -39,10 +42,10 @@
         <input type="number" id="poleilosc">
         <button id="dodaj">Dodaj</button>
         <p id="komunikat"></p>
-        <ul id="lista">
-
-        </ul>
     </form>
+    <ul id="lista">
+
+    </ul>
 </body>
 
 </html>
