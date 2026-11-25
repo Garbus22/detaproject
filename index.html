@@ -10,10 +10,27 @@
         </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script>
+        $(function () {
+            $("#formularz").submit(function(e) {
+                e.preventDefault()
+                let a = $("#poledodawanie").val()
+                let b = $("#poleilosci").val()
+                $("#lista").append("<li>" + a + b + "</li>")
+            })
+        })
+    </script>
 </head>
 
 <body>
-    
+    <form id="formularz">
+        <input type="text" id="poledodawanie">
+        <input type="number" id="poleilosci">
+        <button id="dodaj">Dodaj</button>
+        <ul id="lista">
+            
+        </ul>
+    </form>
 </body>
 
 </html>
