@@ -13,11 +13,13 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script>
         $(function () {
+            let dokupienia = 0;
+            let kupione = 0;
             $("#formularz").submit(function (e) {
                 e.preventDefault()
                 let nazwa = $("#polenazwa").val().trim()
                 let ilosc = $("#poleilosc").val()
-                if(nazwa == "" && ilosc == ""){
+                if (nazwa == "" && ilosc == "") {
                     $("#komunikat").text("Oba Pola musza byc uzupełnione").css("color", "red")
                 } else if (nazwa == "") {
                     $("#komunikat").text("Pole z nazwa musi byc uzupełnione").css("color", "red")
@@ -26,15 +28,28 @@
                 } else if (ilosc <= 0) {
                     $("#komunikat").text("Podaj ilosc wieksza od zera").css("color", "red")
                 } else {
-                    $("#lista").append("<li>" + nazwa + " - " + ilosc + " szt. <button id='usun'> Usun </button> </li>")
+                    ++dokupienia
+                    $("#dokupienia").text("Do kupienia: " + dokupienia + " kupione: " + kupione)
+                    $("#lista").append("<li><span class='produkt'>" + nazwa + " - " + ilosc + " szt. </span> <button id='usun'> Usun </button> </li>")
                     $("#komunikat").text("")
                 }
-                $(document).on("click" , "#usun", function(){
-                    $(this).parent().remove()
-                })
-                $(document).on("click", "li", function(){
-                    $(this).toggleClass("kupiony")
-                })
+            })
+            $(document).on("click", "#usun", function () {
+                $(this).parent().remove()
+                --dokupienia;
+                $("#dokupienia").text("Do kupienia: " + dokupienia + " kupione: " + kupione)
+            })
+            $(document).on("click", ".produkt", function () {
+                $(this).toggleClass("kupiony")
+                if ($(this).hasClass("kupiony")) {
+                    ++kupione;
+                    --dokupienia;
+                    $("#dokupienia").text("Do kupienia: " + dokupienia + " kupione: " + kupione)
+                } else {
+                    --kupione;
+                    ++dokupienia;
+                    $("#dokupienia").text("Do kupienia: " + dokupienia + " kupione: " + kupione)
+                }
             })
         })
     </script>
@@ -45,6 +60,8 @@
         <input type="text" id="polenazwa">
         <input type="number" id="poleilosc">
         <button id="dodaj">Dodaj</button>
+        <p id="kupione"></p>
+        <p id="dokupienia"></p>
         <p id="komunikat"></p>
     </form>
     <ul id="lista">
