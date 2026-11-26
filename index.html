@@ -38,12 +38,16 @@
 
             })
             $(document).on("click", "#usun", function () {
-                $(this).parent().remove()
-                --dokupienia;
+                if($(this).siblings(".produkt").hasClass("kupiony")){
+                    --kupione;
+                } else {
+                    --dokupienia;
+                }
                 $("#dokupienia").text("Do kupienia: " + dokupienia + " kupione: " + kupione)
+                $(this).parent().remove()
                 dlugosclisty = 0;
                 $("li").each(function(){
-                    lugosclisty++;
+                    dlugosclisty++;
                 })
                 if(dlugosclisty == 0){
                     $("#informacja").show()
@@ -51,6 +55,7 @@
             })
             $(document).on("click", ".produkt", function () {
                 $(this).toggleClass("kupiony")
+                console.log("dgdfg")
                 if ($(this).hasClass("kupiony")) {
                     ++kupione;
                     --dokupienia;
